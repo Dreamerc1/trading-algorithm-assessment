@@ -6,9 +6,10 @@ import codingblackfemales.sotw.marketdata.BidLevel;
 import java.util.List;
 
 public interface SimpleAlgoState {
-
+//Returns the symbol of the asset being traded.
     public String getSymbol();
-
+/*  These methods return the number of bid levels 
+(buy orders) and ask levels (sell orders) in the order book.*/
     public int getBidLevels();
     public int getAskLevels();
 
@@ -18,6 +19,7 @@ public interface SimpleAlgoState {
     public List<ChildOrder> getChildOrders();
 
     public List<ChildOrder> getActiveChildOrders();
-
+/*Returns the ID of the instrument being traded, 
+which could be useful if you're working with multiple assets.*/
     public long getInstrumentId();
 }
