@@ -14,7 +14,7 @@ public class MyAlgoLogic implements AlgoLogic {
 
     @Override
     public Action evaluate(SimpleAlgoState state) {
-
+// Log the current state of the order book
         var orderBookAsString = Util.orderBookToString(state);
 
         logger.info("[MYALGO] The state of the order book is:\n" + orderBookAsString);
@@ -24,6 +24,9 @@ public class MyAlgoLogic implements AlgoLogic {
          * Add your logic here....
          *
          */
+    // 1. Get the best bid and ask prices from the state
+    var bestBid = state.getBidAt(0); // Get the highest bid
+    var bestAsk = state.getAskAt(0); // Get the lowest ask
 
         return NoAction.NoAction;
     }
