@@ -36,13 +36,13 @@ export const MarketDepthFeature = () => {
   const data = testData;  // Use test data
 
   // Extract labels and data for bids and offers
-  const priceLevels = data.map((level) => level.level);
+  const priceLevels = data.map((level) => `Level ${level.level}`);
   const bidQuantities = data.map((level) => level.bidQuantity);
   const askQuantities = data.map((level) => level.offerQuantity);
 
   // Prepare chart data
   const chartData = {
-    labels: priceLevels,  // X-axis: levels (0, 1, 2, ...)
+    labels: priceLevels,  // X-axis: price levels (0, 1, 2, ...)
     datasets: [
       {
         label: 'Bid Quantities',
@@ -51,6 +51,7 @@ export const MarketDepthFeature = () => {
         borderColor: 'blue',
         borderWidth: 1,
         hoverBackgroundColor: 'darkblue',
+        stack: 'Stack 0',  // Place bids and asks on the same row
       },
       {
         label: 'Ask Quantities',
@@ -59,6 +60,7 @@ export const MarketDepthFeature = () => {
         borderColor: 'red',
         borderWidth: 1,
         hoverBackgroundColor: 'darkred',
+        stack: 'Stack 1',  // Place bids and asks on the same row
       },
     ],
   };
