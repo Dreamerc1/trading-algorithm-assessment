@@ -38,8 +38,7 @@ public class MyAlgoLogic implements AlgoLogic {
         if (state.getChildOrders().size() < MAX_ORDERS) {
             // Access the best bid price
             BidLevel bestBid = state.getBidAt(0);
-            // Create an order only if the price is above 90
-            if (bestBid != null && bestBid.price > 90) {
+            if (bestBid != null) {
                 long price = bestBid.price;
                 long quantity = 100; // Set your desired quantity
 
@@ -54,18 +53,14 @@ public class MyAlgoLogic implements AlgoLogic {
         // Check for active orders to cancel
         var activeOrders = state.getActiveChildOrders();
         if (!activeOrders.isEmpty()) {
-            // Loop through active orders to see if they need cancelling
-            for (ChildOrder order : activeOrders) {
-                BidLevel currentBid = state.getBidAt(0);
+            // For simplicity, cancel the first active order
+            ChildOrder orderToCancel = activeOrders.get(0);
 
-                //Only cancel if the current market price is unfavorable
-                // Example threshold: cancel if market moves against you by 10 units
-                if (currentBid != null && currentBid.price < order.getPrice() - 10) {
-                    logger.info("[MYALGO] Cancelling order: " + order);
-                    return new CancelChildOrder(order);
-                }
-
-                // If no action is needed
-                return NoAction.NoAction;
-            }
+            logger.info("[MYALGO] Cancelling order: " + orderToCancel);
+            return new CancelChildOrder(orderToCancel);
         }
+
+        // If no action is needed
+        return NoAction.NoAction;
+    }
+}
