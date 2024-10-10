@@ -33,31 +33,36 @@ public class MyAlgoLogic implements AlgoLogic {
          * Add your logic here....
          *
          */
-        // Basic Order Creation Logic
-        // Check if we have fewer than MAX_ORDERS child orders
+        // Order Creation Logic
         if (state.getChildOrders().size() < MAX_ORDERS) {
             // Access the best bid price
             BidLevel bestBid = state.getBidAt(0);
-            if (bestBid != null) {
+
+            // Create an order only if the price is above 90
+            if (bestBid != null && bestBid.price > 90) {
                 long price = bestBid.price;
                 long quantity = 100; // Set your desired quantity
 
                 logger.info("[MYALGO] Placing a BUY order for " + quantity + " @ " + price);
                 return new CreateChildOrder(Side.BUY, quantity, price);
             } else {
-                logger.warn("[MYALGO] No bid levels available in the order book.");
+                logger.warn("[MYALGO] No favorable bid levels available in the order book.");
             }
         }
 
-        // Basic Order Cancellation Logic
-        // Check for active orders to cancel
+        // Order Cancellation Logic
         var activeOrders = state.getActiveChildOrders();
         if (!activeOrders.isEmpty()) {
-            // For simplicity, cancel the first active order
-            ChildOrder orderToCancel = activeOrders.get(0);
+            // Loop through active orders to see if they need cancelling
+            for (ChildOrder order : activeOrders) {
+                BidLevel currentBid = state.getBidAt(0);
 
-            logger.info("[MYALGO] Cancelling order: " + orderToCancel);
-            return new CancelChildOrder(orderToCancel);
+                // Only cancel if the current market price is unfavorable (e.g., 10 units below order price)
+                if (currentBid != null && currentBid.price < order.getPrice() - 10) {
+                    logger.info("[MYALGO] Cancelling order: " + order);
+                    return new CancelChildOrder(order);
+                }
+            }
         }
 
         // If no action is needed
