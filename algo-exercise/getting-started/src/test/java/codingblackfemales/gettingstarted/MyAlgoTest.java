@@ -36,7 +36,7 @@ public class MyAlgoTest extends AbstractAlgoTest {
         //simple assert to check we had 3 orders created
         assertEquals(container.getState().getChildOrders().size(), 3);
     }*/
- @Test
+ /*@Test
    public void testDispatchThroughSequencer() throws Exception {
        // Step 1: Simulate initial market data
        send(createTick());  // Simulate market data using the existing createTick() from AbstractAlgoTest
@@ -57,7 +57,28 @@ public class MyAlgoTest extends AbstractAlgoTest {
        // Depending on how cancellations are tracked, you can assert cancellation logic here
        // For now, we assume cancellation might reduce the number of active child orders
      assertEquals(0, container.getState().getActiveChildOrders().size());  // Ensure orders were cancelled
-   }
+   }*/
+    @Test
+    public void testDispatchThroughSequencer() throws Exception {
+        // Step 1: Simulate initial market data
+        send(createTick());  // Simulate market data using the existing createTick() from AbstractAlgoTest
 
+        // Step 2: Simulate the message being received, which triggers the algorithm logic
+        container.onMessage(createTick());  // Simulate message received by the container
+
+        // Step 3: Check if an order is created
+        // Since the container processes actions, we assume the action would have been processed
+        assertTrue(container.getState().getChildOrders().size() > 0);  // Check that an order has been created
+
+        // Step 4: Simulate another tick (with the same market data)
+        send(createTick());  // Simulate the same market data again
+        container.onMessage(createTick());  // Trigger logic again
+
+        // Step 5: Check if an order is cancelled
+        // The test should check the current state to ensure cancellation happens based on your logic
+        // Depending on how cancellations are tracked, you can assert cancellation logic here
+        // For now, we assume cancellation might reduce the number of active child orders
+        assertEquals(0, container.getState().getActiveChildOrders().size());  // Ensure orders were cancelled
+    }
 }
 
