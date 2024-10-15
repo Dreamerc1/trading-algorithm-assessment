@@ -17,9 +17,9 @@ public class MyAlgoLogic implements AlgoLogic {
 
     private static final Logger logger = LoggerFactory.getLogger(MyAlgoLogic.class);
   
-    private static final double BUY_THRESHOLD = 1.05;
-    private static final double SELL_THRESHOLD = 0.95;
-    private static final int MAX_ORDERS = 3; // Maximum number of child orders
+    private static final double BUY_THRESHOLD = 1.10;
+    private static final double SELL_THRESHOLD = 0.90;
+    private static final int MAX_ORDERS = 5; // Maximum number of child orders
 
     @Override
     public Action evaluate(SimpleAlgoState state) {
