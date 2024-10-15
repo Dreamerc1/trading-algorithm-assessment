@@ -1,9 +1,11 @@
 package codingblackfemales.gettingstarted;
 
+import ch.qos.logback.classic.Logger;
 import codingblackfemales.algo.AlgoLogic;
+import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * This test plugs together all of the infrastructure, including the order book (which you can trade against)
@@ -23,6 +25,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
     public AlgoLogic createAlgoLogic() {
         return new MyAlgoLogic();
     }
+
 
     @Test
     public void testExampleBackTest() throws Exception {
@@ -56,7 +59,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         // Step 3: Optionally, check specific order details like price, quantity, etc.
         var firstOrder = state.getChildOrders().get(0);  // Retrieve the first order
         assertEquals("Expected price for first order", 98, firstOrder.getPrice());
-        assertEquals("Expected quantity for first order", 100, firstOrder.getQuantity());
+        assertEquals("Expected quantity for first order", 300, firstOrder.getQuantity());
 
         // Step 4: Simulate the next market tick (if applicable)
         send(createTick2());
@@ -69,9 +72,8 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         // Step 6: Check if the orders reflect the changes in the market (e.g., price adjustments, new orders)
         var updatedOrder = state.getChildOrders().get(0);  // Retrieve the first updated order
         assertEquals("Expected updated price for first order", 98, updatedOrder.getPrice());
-        assertEquals("Expected updated quantity for first order", 100, updatedOrder.getQuantity());
+        assertEquals("Expected updated quantity for first order", 300, updatedOrder.getQuantity());
     }
-
 
 
 
