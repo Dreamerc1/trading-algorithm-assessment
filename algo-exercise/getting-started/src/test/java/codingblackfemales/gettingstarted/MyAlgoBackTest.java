@@ -3,6 +3,8 @@ package codingblackfemales.gettingstarted;
 import codingblackfemales.algo.AlgoLogic;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * This test plugs together all of the infrastructure, including the order book (which you can trade against)
  * and the market data feed.
@@ -41,5 +43,36 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         //and: check that our algo state was updated to reflect our fills when the market data
         //assertEquals(225, filledQuantity);
     }
+    @Test
+    public void testOrderCreation() throws Exception {
+        // Step 1: Simulate the initial market tick
+        send(createTick());
+
+        // Step 2: Verify if the expected number of child orders were created
+        var state = container.getState();
+        int expectedOrderCount = 5;  // Adjust based on your algo's behavior
+        assertEquals("Expected number of orders created", expectedOrderCount, state.getChildOrders().size());
+
+        // Step 3: Optionally, check specific order details like price, quantity, etc.
+        var firstOrder = state.getChildOrders().get(0);  // Retrieve the first order
+        assertEquals("Expected price for first order", 98, firstOrder.getPrice());
+        assertEquals("Expected quantity for first order", 100, firstOrder.getQuantity());
+
+        // Step 4: Simulate the next market tick (if applicable)
+        send(createTick2());
+
+        // Step 5: Optionally, validate additional order creation after market tick 2
+        state = container.getState();  // Refresh state after the next tick
+        int newExpectedOrderCount = 5;  // Adjust based on your algo's behavior after the second tick
+        assertEquals("Expected number of orders after second tick", newExpectedOrderCount, state.getChildOrders().size());
+
+        // Step 6: Check if the orders reflect the changes in the market (e.g., price adjustments, new orders)
+        var updatedOrder = state.getChildOrders().get(0);  // Retrieve the first updated order
+        assertEquals("Expected updated price for first order", 98, updatedOrder.getPrice());
+        assertEquals("Expected updated quantity for first order", 100, updatedOrder.getQuantity());
+    }
+
+
+
 
 }
