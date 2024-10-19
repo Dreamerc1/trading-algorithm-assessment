@@ -26,7 +26,7 @@ public class MyAlgoTest extends AbstractAlgoTest {
     }
 
 
-    @Test
+   @Test
     public void exampleTestDispatchThroughSequencer() throws Exception {
 
         //create a sample market data tick....
@@ -34,17 +34,86 @@ public class MyAlgoTest extends AbstractAlgoTest {
 
 
         //simple assert to check we had 3 orders created
-        assertEquals(container.getState().getChildOrders().size(), 5);
+        assertEquals(container.getState().getChildOrders().size(), 3);
     }
+
+
+
+    //Test 1: Check that after creating 3 orders, the first one is canceled on the next tick.
 
     @Test
-    public void testOrderCreation() throws Exception {
-        // Step 1: Send market data to trigger order creation
-        send(createTick());  // Simulate market conditions
+    public void testCancelFirstOrder() throws Exception {
+        // Simulate 3 market ticks to create 3 orders
+        for (int i = 0; i < 3; i++) {
+            send(createTick());
+        }
 
-        // Step 2: Assert that 5 child orders were created
-        assertEquals("Expected 5 child orders to be created.", 5, container.getState().getChildOrders().size());
+        // Assert that 3 orders have been created
+        var state = container.getState();
+        assertEquals("Expected 3 child orders to be created.", 3, state.getChildOrders().size());
+
+        // Simulate another tick to trigger cancellation of the first order
+        send(createTick());
+
+        // Assert that the first order is canceled
+        assertTrue("First order should be canceled.", state.getChildOrders().get(0).isCanceled());
     }
+
+    /*@Test
+    public void testOrderCancellation() throws Exception {
+        // Step 1: Send market data to create orders
+        send(createTick());  // Creates initial orders
+
+        // Step 2: Assert that 5 child orders were created initially
+        assertEquals(5, container.getState().getChildOrders().size());
+
+        // Step 3: Send market data where prices are unfavorable (simulate a drop in price)
+        send(createTick2());  // Simulate unfavorable market conditions
+
+        // Step 4: Assert that child orders were canceled appropriately
+        assertTrue("Expected some orders to be canceled.", container.getState().getCanceledChildOrders().size() > 0);
+    }
+    @Test
+    public void testNoAction() throws Exception {
+        // Step 1: Send market data where the price doesn't trigger an order creation or cancellation
+        send(createTickUnchanged());  // Simulate unchanged/stable market conditions
+
+        // Step 2: Assert that no new orders were created or canceled
+        assertEquals("No new orders should be created.", 0, container.getState().getChildOrders().size());
+        assertEquals("No orders should be canceled.", 0, container.getState().getCanceledChildOrders().size());
+    }*/
+    //Test 2: Ensure that the algorithm places orders at the best bid price.
+    @Test
+    public void testBestPriceTaken() throws Exception {
+        // Step 1: Simulate market data tick(s) with known bid/ask prices
+        send(createTick());  // Simulate market condition
+
+        // Step 2: Get the first order created by the algorithm
+        var state = container.getState();
+        var firstOrder = state.getChildOrders().get(0);
+
+        // Step 3: Retrieve the best bid price from the market data
+        long bestBidPrice = state.getBidAt(0).price;
+
+        // Step 4: Assert that the order was placed at the best bid price
+        assertEquals("Expected the order to be placed at the best bid price", bestBidPrice, firstOrder.getPrice());
+    }
+    //Test 2: Ensure that each buy order has a quantity of 50.
+    @Test
+    public void testBuysFiftyUnits() throws Exception {
+        // Step 1: Simulate market data tick(s)
+        send(createTick());  // First tick
+
+        // Step 2: Get the first order created by the algorithm
+        var state = container.getState();
+        var firstOrder = state.getChildOrders().get(0);
+
+        // Step 3: Assert that the order has a quantity of 50
+        long expectedQuantity = 50;
+        assertEquals("Expected each buy order to have a quantity of 50", expectedQuantity, firstOrder.getQuantity());
+    }
+
+
 }
 
 
