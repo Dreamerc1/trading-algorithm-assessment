@@ -63,7 +63,7 @@ public class MyAlgoLogic implements AlgoLogic {
 }*/
     private static final Logger logger = LoggerFactory.getLogger(MyAlgoLogic.class);
     private static final int MAX_ORDERS = 3;  // Create up to 3 orders
-    private int totalOrdersCreated = 0;  // Persistent counter for total orders created
+    private int totalOrdersCreated = 0;  // Counter for total orders created
     private boolean isStopped = false;   // Flag to stop the algorithm after cancellation
 
     @Override

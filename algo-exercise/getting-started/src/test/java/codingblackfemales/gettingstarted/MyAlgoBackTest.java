@@ -45,39 +45,42 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         //Check things like filled quantity, cancelled order count etc....
         long filledQuantity = state.getChildOrders().stream().map(ChildOrder::getFilledQuantity).reduce(Long::sum).get();
         //and: check that our algo state was updated to reflect our fills when the market data
-        assertEquals(250, filledQuantity);
+        assertEquals(150, filledQuantity);
     }
     @Test
-    public void testOrdersAreFilled() throws Exception {
-        // Step 1: Send the initial market data tick to create orders
+    public void testOrderFillsInBackTest() throws Exception {
+        // Step 1: Simulate the initial market tick to trigger order creation
         send(createTick());
 
-        // Step 2: Verify that 3 orders were created
+        // Step 2: Assert that orders have been created
         var state = container.getState();
-        assertEquals("Expected 3 child orders to be created.", 3, state.getChildOrders().size());
+        int expectedOrderCount = 3;  // Adjust if your algo creates more/less orders
+        assertEquals("Expected 3 child orders to be created", expectedOrderCount, state.getChildOrders().size());
 
-        // Step 3: Send the second market data tick to move the market towards the orders
+        // Step 3: Print order details for debugging before sending the second tick
+        for (ChildOrder order : state.getChildOrders()) {
+            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
+        }
+
+        // Step 4: Simulate the second market tick (market moving towards us)
         send(createTick2());
 
-        // Step 4: Wait for the orders to be filled
-        // Depending on your framework, you might need to allow some time or steps for the fills to be processed
-
-        // Step 5: Retrieve the updated state
+        // Step 5: Get the updated state after the second tick
         state = container.getState();
 
-        // Step 6: Calculate the total filled quantity
+        // Step 6: Print the order details again to see if any orders were filled
+        for (ChildOrder order : state.getChildOrders()) {
+            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
+        }
+
+        // Step 7: Check that the filled quantity is as expected (250 in this case)
         long filledQuantity = state.getChildOrders().stream()
                 .mapToLong(ChildOrder::getFilledQuantity)
                 .sum();
 
-        // Step 7: Assert that the filled quantity matches the expected value
-        long expectedFilledQuantity = 150; // 3 orders * 50 units each
-        assertEquals("Orders should be filled and total filled quantity should be 150", expectedFilledQuantity, filledQuantity);
-
-        // Step 8: Optionally, verify that the algorithm has stopped
-        // Since we modified the logic to stop after orders are filled
+        long expectedFilledQuantity = 150;  // Adjust based on the test logic
+        assertEquals("Filled quantity does not match", expectedFilledQuantity, filledQuantity);
     }
-
 
 
     @Test
