@@ -1,0 +1,13 @@
+import "./MarketDepthPanel.css";
+
+.MarketDepthPanel {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.MarketDepthPanel th,
+.MarketDepthPanel td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}

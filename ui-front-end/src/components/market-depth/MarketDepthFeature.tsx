@@ -1,89 +1,28 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Placeholder } from "../placeholder";
+import { useMarketDepthData } from "./useMarketDepthData";
+import { schemas } from "../../data/algo-schemas";
+import {MarketDepthPanel} from './MarketDepthPanel';
 
-// Register Chart.js components for the bar chart
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
-// Test data (can replace with dynamic data if needed)
+
+// prettier-ignore
 const testData: MarketDepthRow[] = [
-  { symbolLevel: "1230", level: 0, bid: 3075, bidQuantity: 3075, offer: 50.19, offerQuantity: 2200 },
-  { symbolLevel: "1231", level: 1, bid: 3251, bidQuantity: 3251, offer: 51.03, offerQuantity: 2263 },
-  { symbolLevel: "1232", level: 2, bid: 3394, bidQuantity: 3394, offer: 51.62, offerQuantity: 2244 },
-  { symbolLevel: "1233", level: 3, bid: 3408, bidQuantity: 3408, offer: 52.24, offerQuantity: 2457 },
-  { symbolLevel: "1234", level: 4, bid: 3485, bidQuantity: 3485, offer: 53.70, offerQuantity: 2467 },
-  { symbolLevel: "1235", level: 5, bid: 3559, bidQuantity: 3559, offer: 55.06, offerQuantity: 2631 },
-  { symbolLevel: "1236", level: 6, bid: 3667, bidQuantity: 3667, offer: 56.58, offerQuantity: 2671 },
+{ symbolLevel:"1230", level: 0, bid: 1000, bidQuantity: 500, offer: 1010, offerQuantity: 700 },
+{ symbolLevel:"1231", level: 1, bid: 990, bidQuantity: 700, offer: 1012, offerQuantity: 400 },
+{ symbolLevel:"1232", level: 2, bid: 985, bidQuantity: 1200, offer: 1013, offerQuantity: 800 },
+{ symbolLevel:"1233", level: 3, bid: 984, bidQuantity: 1300, offer: 1018, offerQuantity: 750 },
+{ symbolLevel:"1234", level: 4, bid: 970, bidQuantity: 800, offer: 1021, offerQuantity: 900 },
+{ symbolLevel:"1235", level: 5, bid: 969, bidQuantity: 700, offer: 1026, offerQuantity: 1500 },
+{ symbolLevel:"1236", level: 6, bid: 950, bidQuantity: 750, offer: 1027, offerQuantity: 1500 },
+{ symbolLevel:"1237", level: 7, bid: 945, bidQuantity: 900, offer: 1029, offerQuantity: 2000 },
+{ symbolLevel:"1238", level: 8, bid: 943, bidQuantity: 500, offer: 1031, offerQuantity: 500 },
+{ symbolLevel:"1239", level: 9, bid: 940, bidQuantity: 200, offer: 1024, offerQuantity: 800 },
 ];
 
-// MarketDepthFeature Component
+/**
+ * TODO
+ */
 export const MarketDepthFeature = () => {
-  const data = testData;  // Use test data
-
-  // Extract labels and data for bids and offers
-  const priceLevels = data.map((level) => `Level ${level.level}`);
-  const bidQuantities = data.map((level) => level.bidQuantity);
-  const askQuantities = data.map((level) => level.offerQuantity);
-
-  // Prepare chart data
-  const chartData = {
-    labels: priceLevels,  // X-axis: price levels (0, 1, 2, ...)
-    datasets: [
-      {
-        label: 'Bid Quantities',
-        data: bidQuantities,
-        backgroundColor: 'blue',
-        borderColor: 'blue',
-        borderWidth: 1,
-        hoverBackgroundColor: 'darkblue',
-        stack: 'Stack 0',  // Place bids and asks on the same row
-      },
-      {
-        label: 'Ask Quantities',
-        data: askQuantities,
-        backgroundColor: 'red',
-        borderColor: 'red',
-        borderWidth: 1,
-        hoverBackgroundColor: 'darkred',
-        stack: 'Stack 1',  // Place bids and asks on the same row
-      },
-    ],
-  };
-
-  // Chart options to format it as horizontal bars
-  const chartOptions = {
-    indexAxis: 'y',  // This makes the bar chart horizontal
-    scales: {
-      x: {
-        beginAtZero: true,  // Start the X-axis from 0
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',  // Place legend at the top
-      },
-    },
-  };
-
-  return (
-    <div>
-      <Bar data={chartData} options={chartOptions} />
-    </div>
-  );
+  const data = useMarketDepthData(schemas.prices);
+return <MarketDepthPanel data={data} />;
 };
