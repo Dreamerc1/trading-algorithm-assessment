@@ -7,21 +7,32 @@ export const MarketDepthPanel = (props: MarketDepthPanelProps) => {
     <table className="MarketDepthPanel">
       <thead>
         <tr>
+          <th colSpan={2}>Bid</th>
+          <th colSpan={2}>Ask</th>
+        </tr>
+        <tr>
+          <th>Quantity</th>
+          <th>Price</th>
           <th>Price</th>
           <th>Quantity</th>
-          {/* Add other headers based on data structure */}
         </tr>
       </thead>
       <tbody>
         {props.data.map((row, index) => (
           <tr key={index}>
-            <td>{row.price}</td>
-            <td>{row.quantity}</td>
-            {/* Add other cells based on data structure */}
+            <td className="bid-quantity">{row.bidQuantity}</td>
+            <td className="bid-price">
+              <span className="direction">{row.bidDirection === 'up' ? '↑' : '↓'}</span>
+              {row.bidPrice}
+            </td>
+            <td className="ask-price">
+              <span className="direction">{row.askDirection === 'up' ? '↑' : '↓'}</span>
+              {row.askPrice}
+            </td>
+            <td className="ask-quantity">{row.askQuantity}</td>
           </tr>
         ))}
       </tbody>
     </table>
   );
 };
-

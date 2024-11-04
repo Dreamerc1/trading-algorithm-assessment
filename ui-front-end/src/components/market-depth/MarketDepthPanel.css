@@ -9,5 +9,25 @@ import "./MarketDepthPanel.css";
 .MarketDepthPanel td {
   padding: 8px;
   border: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+}
+
+.MarketDepthPanel th {
+  background-color: #f5f5f5;
+}
+
+.bid-quantity {
+  background-color: #3778c2; /* Blue for bid */
+  color: white;
+  padding: 8px;
+}
+
+.ask-quantity {
+  background-color: #c23737; /* Red for ask */
+  color: white;
+  padding: 8px;
+}
+
+.direction {
+  margin-right: 4px;
 }
