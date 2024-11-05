@@ -12,9 +12,10 @@ export const PriceCell = (props: PriceCellProps) => {
   return (
     <td className="PriceCell">
       <span className={`arrow ${direction === 'up' ? 'up' : 'down'}`}>
-        {direction === 'up' ? '⬆️' : '⬇️'}
+        {direction === 'up' ? '▲' : '▼'}
       </span>
       {price.toFixed(2)}
     </td>
   );
 };
+

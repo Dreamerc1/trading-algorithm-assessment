@@ -1,7 +1,6 @@
- import { Placeholder } from "../placeholder";
-import { useMarketDepthData } from "./useMarketDepthData";
-import { schemas } from "../../data/algo-schemas";
-import {MarketDepthPanel} from './MarketDepthPanel';
+import { useDataSource } from "@vuu-ui/vuu-table-types";
+import { useMemo } from "react";
+import { MarketDepthPanel } from './MarketDepthPanel';
 import './MarketDepthFeature.css';
 
 
