@@ -2,6 +2,8 @@ import { useDataSource } from "@vuu-ui/vuu-table-types";
 import { useMemo } from "react";
 import { MarketDepthPanel } from './MarketDepthPanel';
 import './MarketDepthFeature.css';
+import { useMarketDepthData } from "./useMarketDepthData";
+import { schemas } from "../../data/algo-schemas";
 
 
 
@@ -22,7 +24,8 @@ const testData: MarketDepthRow[] = [
 
 export const MarketDepthFeature = () => {
 
-  const data = testData;
+  /* const data = testData; */
+  const data = useMarketDepthData(schemas.prices);
 
   return (
     <div className="market-depth-container">
