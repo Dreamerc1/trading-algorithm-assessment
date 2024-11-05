@@ -1,4 +1,4 @@
-import { Placeholder } from "../placeholder";
+ import { Placeholder } from "../placeholder";
 import { useMarketDepthData } from "./useMarketDepthData";
 import { schemas } from "../../data/algo-schemas";
 import {MarketDepthPanel} from './MarketDepthPanel';
@@ -20,9 +20,7 @@ const testData: MarketDepthRow[] = [
 { symbolLevel:"1239", level: 9, bid: 940, bidQuantity: 200, offer: 1024, offerQuantity: 800 },
 ];
 
-/**
- * TODO
- */
+
 export const MarketDepthFeature = () => {
 
   const data = testData;

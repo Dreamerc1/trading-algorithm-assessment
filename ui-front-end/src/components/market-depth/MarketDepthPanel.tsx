@@ -23,22 +23,23 @@ export const MarketDepthPanel = (props: MarketDepthPanelProps) => {
     <table className="MarketDepthPanel">
       <thead>
         <tr>
-          <th colSpan={1}></th> {/* First empty column header */}
+          <th colSpan={1}></th>
           <th colSpan={2}>Bid</th>
           <th colSpan={2}>Ask</th>
         </tr>
         <tr>
-          <th></th> {/* Second empty column header */}
+          <th></th>
           <th>Quantity</th>
           <th>Price</th>
           <th>Price</th>
           <th>Quantity</th>
         </tr>
       </thead>
+
       <tbody>
         {data.map((row, index) => (
           <tr key={row.symbolLevel}>
-            <td className="row-index">{index}</td> {/* Row index column */}
+            <td className="row-index">{index}</td>
             <QuantityCell quantity={row.bidQuantity} type="bid" />
             <PriceCell price={row.bid} direction="up" />
             <PriceCell price={row.offer} direction="down" />
