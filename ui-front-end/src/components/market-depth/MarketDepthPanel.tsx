@@ -1,16 +1,34 @@
+import React from 'react';
+import { PriceCell } from './PriceCell';
+import { QuantityCell } from './QuantityCell';
+import './MarketDepthPanel.css';
+
+interface MarketDepthRow {
+  symbolLevel: string;
+  level: number;
+  bid: number;
+  bidQuantity: number;
+  offer: number;
+  offerQuantity: number;
+}
+
 interface MarketDepthPanelProps {
   data: MarketDepthRow[];
 }
 
 export const MarketDepthPanel = (props: MarketDepthPanelProps) => {
+  const { data } = props;
+
   return (
     <table className="MarketDepthPanel">
       <thead>
         <tr>
+          <th colSpan={1}></th> {/* First empty column header */}
           <th colSpan={2}>Bid</th>
           <th colSpan={2}>Ask</th>
         </tr>
         <tr>
+          <th></th> {/* Second empty column header */}
           <th>Quantity</th>
           <th>Price</th>
           <th>Price</th>
@@ -18,18 +36,13 @@ export const MarketDepthPanel = (props: MarketDepthPanelProps) => {
         </tr>
       </thead>
       <tbody>
-        {props.data.map((row, index) => (
-          <tr key={index}>
-            <td className="bid-quantity">{row.bidQuantity}</td>
-            <td className="bid-price">
-              <span className="direction">{row.bidDirection === 'up' ? '↑' : '↓'}</span>
-              {row.bidPrice}
-            </td>
-            <td className="ask-price">
-              <span className="direction">{row.askDirection === 'up' ? '↑' : '↓'}</span>
-              {row.askPrice}
-            </td>
-            <td className="ask-quantity">{row.askQuantity}</td>
+        {data.map((row, index) => (
+          <tr key={row.symbolLevel}>
+            <td className="row-index">{index}</td> {/* Row index column */}
+            <QuantityCell quantity={row.bidQuantity} type="bid" />
+            <PriceCell price={row.bid} direction="up" />
+            <PriceCell price={row.offer} direction="down" />
+            <QuantityCell quantity={row.offerQuantity} type="ask" />
           </tr>
         ))}
       </tbody>

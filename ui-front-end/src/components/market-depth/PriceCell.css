@@ -1,0 +1,11 @@
+.price-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.direction {
+  margin-right: 4px; /* Space between arrow and price */
+  font-size: 14px;
+}

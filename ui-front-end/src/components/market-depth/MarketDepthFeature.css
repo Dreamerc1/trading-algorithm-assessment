@@ -1,0 +1,22 @@
+.market-depth-container {
+  max-height: none;
+  overflow: auto; /* Allow scrolling if content exceeds container height */
+  padding: 50px;
+}
+
+.MarketDepthPanel {
+  width: 80%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.MarketDepthPanel th, .MarketDepthPanel td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.MarketDepthPanel .row-index {
+  font-weight: bold;
+  background-color: #f9f9f9;
+  width: 20px; /* Set width for row index column */
+}

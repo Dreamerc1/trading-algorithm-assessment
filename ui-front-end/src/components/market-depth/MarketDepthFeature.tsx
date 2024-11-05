@@ -2,6 +2,7 @@ import { Placeholder } from "../placeholder";
 import { useMarketDepthData } from "./useMarketDepthData";
 import { schemas } from "../../data/algo-schemas";
 import {MarketDepthPanel} from './MarketDepthPanel';
+import './MarketDepthFeature.css';
 
 
 
@@ -23,6 +24,12 @@ const testData: MarketDepthRow[] = [
  * TODO
  */
 export const MarketDepthFeature = () => {
-  const data = useMarketDepthData(schemas.prices);
-return <MarketDepthPanel data={data} />;
+
+  const data = testData;
+
+  return (
+    <div className="market-depth-container">
+      <MarketDepthPanel data={data} />
+    </div>
+  );
 };

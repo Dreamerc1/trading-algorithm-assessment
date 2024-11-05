@@ -1,0 +1,54 @@
+/*
+.bid-quantity {
+  background-color: #3778c2; */
+/* Blue for bid *//*
+
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.ask-quantity {
+  background-color: #c23737; */
+/* Red for ask *//*
+
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 4px;
+}
+*/
+.QuantityCell {
+  position: relative;
+  padding: 0;
+  text-align: center;
+  height: 100%;
+  overflow: hidden; /* Make sure the bar does not overflow */
+}
+
+.QuantityCell .bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.QuantityCell.bid .bar {
+  background-color: #007bff; /* Blue for bid */
+}
+
+.QuantityCell.ask .bar {
+  background-color: #dc3545; /* Red for ask */
+}
+
+.quantity-value {
+  position: relative;
+  z-index: 1;
+  padding-right: 10px; /* Adds spacing to the right */
+  font-weight: bold;
+  color: black; /* White color for text to contrast with the bars */
+}
+
