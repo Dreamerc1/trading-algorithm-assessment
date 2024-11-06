@@ -59,7 +59,7 @@ public class MyAlgoTest extends AbstractAlgoTest {
         assertTrue("First order should be canceled.", state.getChildOrders().get(0).isCanceled());
     }
 
-    /*@Test
+    @Test
     public void testOrderCancellation() throws Exception {
         // Step 1: Send market data to create orders
         send(createTick());  // Creates initial orders

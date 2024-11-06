@@ -47,7 +47,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         //and: check that our algo state was updated to reflect our fills when the market data
         assertEquals(150, filledQuantity);
     }
-   /* @Test
+    @Test
     public void testOrderFillsInBackTest() throws Exception {
         // Step 1: Simulate the initial market tick to trigger order creation
         send(createTick());
@@ -80,7 +80,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
 
         long expectedFilledQuantity = 150;  // Adjust based on the test logic
         assertEquals("Filled quantity does not match", expectedFilledQuantity, filledQuantity);
-    }*/
+    }
 
 
     @Test
