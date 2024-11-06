@@ -21,34 +21,42 @@ public class MyAlgoLogic implements AlgoLogic {
 
     @Override
     public Action evaluate(SimpleAlgoState state) {
-        logger.info("[MYALGO] Evaluating...");
+        try {
+            logger.info("[MYALGO] Evaluating...");
 
-        // Check the total number of orders
-        int totalOrders = state.getChildOrders().size();
+            // Check the total number of orders
+            int totalOrders = state.getChildOrders().size();
 
-        // Create up to 3 orders
-        if (totalOrders < MAX_ORDERS) {
-            BidLevel bestBid = state.getBidAt(0);
-            if (bestBid != null) {
-                long price = bestBid.price;
-                long quantity = 50; // Example quantity
-                logger.info("[MYALGO] Creating order #" + (totalOrders + 1) + " for " + quantity + " @ " + price);
-                return new CreateChildOrder(Side.BUY, quantity, price);
-            } else {
-                logger.warn("[MYALGO] No bid levels available.");
+            // Create up to 3 orders
+            if (totalOrders < MAX_ORDERS) {
+                BidLevel bestBid = state.getBidAt(0);
+                if (bestBid != null) {
+                    long price = bestBid.price;
+                    long quantity = 50; // Example quantity
+                    logger.info("[MYALGO] Creating order #" + (totalOrders + 1) + " for " + quantity + " @ " + price);
+                    return new CreateChildOrder(Side.BUY, quantity, price);
+                } else {
+                    logger.warn("[MYALGO] No bid levels available.");
+                }
             }
-        }
 
-        // Order cancellation logic (cancel the first active order)
-        if (!state.getActiveChildOrders().isEmpty()) {
-            ChildOrder firstOrder = state.getActiveChildOrders().get(0);
-            if (!firstOrder.isCanceled()) {
-                logger.info("[MYALGO] Cancelling the first order: " + firstOrder);
-                firstOrder.setCanceled(true);  // Mark the order as canceled
-                return new CancelChildOrder(firstOrder);
+            // Order cancellation logic (cancel the first active order)
+            if (!state.getActiveChildOrders().isEmpty()) {
+                ChildOrder firstOrder = state.getActiveChildOrders().get(0);
+                if (!firstOrder.isCanceled()) {
+                    logger.info("[MYALGO] Cancelling the first order: " + firstOrder);
+                    firstOrder.setCanceled(true);  // Mark the order as canceled
+                    return new CancelChildOrder(firstOrder);
+                }
             }
-        }
 
+        } catch (NullPointerException e) {
+            // This exception occurs when attempting to access a method or property of a null object reference.
+            logger.error("[MYALGO] NullPointerException occurred: " + e.getMessage(), e);
+        }    catch (Exception e) {
+            // This catch block handles any other unexpected exceptions that may occur.
+            logger.error("[MYALGO] An unexpected error occurred: " + e.getMessage(), e);
+        }
 
         // No further actions
         return NoAction.NoAction;
