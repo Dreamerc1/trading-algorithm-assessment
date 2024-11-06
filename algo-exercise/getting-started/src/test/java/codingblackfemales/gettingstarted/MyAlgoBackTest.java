@@ -1,9 +1,7 @@
 package codingblackfemales.gettingstarted;
 
-import ch.qos.logback.classic.Logger;
 import codingblackfemales.algo.AlgoLogic;
 import codingblackfemales.sotw.ChildOrder;
-import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -29,7 +27,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
 
 
     @Test
-    public void testExampleBackTest() throws Exception {
+    public void testOrderfills() throws Exception {
         //create a sample market data tick....
         send(createTick());
 
@@ -47,40 +45,7 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         //and: check that our algo state was updated to reflect our fills when the market data
         assertEquals(150, filledQuantity);
     }
-   /* @Test
-    public void testOrderFillsInBackTest() throws Exception {
-        // Step 1: Simulate the initial market tick to trigger order creation
-        send(createTick());
 
-        // Step 2: Assert that orders have been created
-        var state = container.getState();
-        int expectedOrderCount = 3;  // Adjust if your algo creates more/less orders
-        assertEquals("Expected 3 child orders to be created", expectedOrderCount, state.getChildOrders().size());
-
-        // Step 3: Print order details for debugging before sending the second tick
-        for (ChildOrder order : state.getChildOrders()) {
-            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
-        }
-
-        // Step 4: Simulate the second market tick (market moving towards us)
-        send(createTick2());
-
-        // Step 5: Get the updated state after the second tick
-        state = container.getState();
-
-        // Step 6: Print the order details again to see if any orders were filled
-        for (ChildOrder order : state.getChildOrders()) {
-            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
-        }
-
-        // Step 7: Check that the filled quantity is as expected (250 in this case)
-        long filledQuantity = state.getChildOrders().stream()
-                .mapToLong(ChildOrder::getFilledQuantity)
-                .sum();
-
-        long expectedFilledQuantity = 150;  // Adjust based on the test logic
-        assertEquals("Filled quantity does not match", expectedFilledQuantity, filledQuantity);
-    }*/
 
 
     @Test
@@ -152,8 +117,38 @@ public class MyAlgoBackTest extends AbstractAlgoBackTest {
         assertEquals("Expected quantity for the first order.", 50L, firstOrder.getQuantity());
         assertEquals("Expected side for the first order.", "BUY", firstOrder.getSide().toString());
     }
-
-
-
-
 }
+/* @Test
+    public void testOrderFillsInBackTest() throws Exception {
+        // Step 1: Simulate the initial market tick to trigger order creation
+        send(createTick());
+
+        // Step 2: Assert that orders have been created
+        var state = container.getState();
+        int expectedOrderCount = 3;  // Adjust if your algo creates more/less orders
+        assertEquals("Expected 3 child orders to be created", expectedOrderCount, state.getChildOrders().size());
+
+        // Step 3: Print order details for debugging before sending the second tick
+        for (ChildOrder order : state.getChildOrders()) {
+            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
+        }
+
+        // Step 4: Simulate the second market tick (market moving towards us)
+        send(createTick2());
+
+        // Step 5: Get the updated state after the second tick
+        state = container.getState();
+
+        // Step 6: Print the order details again to see if any orders were filled
+        for (ChildOrder order : state.getChildOrders()) {
+            System.out.println("Order ID: " + order.getOrderId() + ", Filled Qty: " + order.getFilledQuantity());
+        }
+
+        // Step 7: Check that the filled quantity is as expected (250 in this case)
+        long filledQuantity = state.getChildOrders().stream()
+                .mapToLong(ChildOrder::getFilledQuantity)
+                .sum();
+
+        long expectedFilledQuantity = 150;  // Adjust based on the test logic
+        assertEquals("Filled quantity does not match", expectedFilledQuantity, filledQuantity);
+    }*/

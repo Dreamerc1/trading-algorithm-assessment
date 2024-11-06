@@ -15,7 +15,7 @@
 .MarketDepthPanel th:nth-child(5),
 .MarketDepthPanel td:nth-child(2),
 .MarketDepthPanel td:nth-child(5) {
-  min-width: 120px; /* Quantity columns */
+  min-width: 120px;
 }
 
 .MarketDepthPanel th:nth-child(3),
@@ -25,7 +25,6 @@
   min-width: 80px; /* Price columns */
 }
 .market-depth-container {
-  /* Ensure there's no fixed height or overflow restriction */
   height: auto;
   overflow: visible;
 }
@@ -36,5 +35,5 @@
 }
 .MarketDepthPanel tbody {
   display: table-row-group;
-  height: auto; /* Ensures all rows are displayed */
+  height: auto;
 }

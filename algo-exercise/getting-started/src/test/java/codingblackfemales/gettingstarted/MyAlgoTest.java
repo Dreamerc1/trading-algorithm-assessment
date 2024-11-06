@@ -98,7 +98,7 @@ public class MyAlgoTest extends AbstractAlgoTest {
         // Step 4: Assert that the order was placed at the best bid price
         assertEquals("Expected the order to be placed at the best bid price", bestBidPrice, firstOrder.getPrice());
     }
-    //Test 2: Ensure that each buy order has a quantity of 50.
+    //Test 3: Ensure that each buy order has a quantity of 50.
     @Test
     public void testBuysFiftyUnits() throws Exception {
         // Step 1: Simulate market data tick(s)
