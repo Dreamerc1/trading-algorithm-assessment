@@ -59,30 +59,7 @@ public class MyAlgoTest extends AbstractAlgoTest {
         assertTrue("First order should be canceled.", state.getChildOrders().get(0).isCanceled());
     }
 
-    /*@Test
-    public void testOrderCancellation() throws Exception {
-        // Step 1: Send market data to create orders
-        send(createTick());  // Creates initial orders
 
-        // Step 2: Assert that 5 child orders were created initially
-        assertEquals(5, container.getState().getChildOrders().size());
-
-        // Step 3: Send market data where prices are unfavorable (simulate a drop in price)
-        send(createTick2());  // Simulate unfavorable market conditions
-
-        // Step 4: Assert that child orders were canceled appropriately
-        assertTrue("Expected some orders to be canceled.", container.getState().getCanceledChildOrders().size() > 0);
-    }
-    @Test
-    public void testNoAction() throws Exception {
-        // Step 1: Send market data where the price doesn't trigger an order creation or cancellation
-        send(createTickUnchanged());  // Simulate unchanged/stable market conditions
-
-        // Step 2: Assert that no new orders were created or canceled
-        assertEquals("No new orders should be created.", 0, container.getState().getChildOrders().size());
-        assertEquals("No orders should be canceled.", 0, container.getState().getCanceledChildOrders().size());
-    }*/
-    //Test 2: Ensure that the algorithm places orders at the best bid price.
     @Test
     public void testBestPriceTaken() throws Exception {
         // Step 1: Simulate market data tick(s) with known bid/ask prices

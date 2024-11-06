@@ -1,6 +1,7 @@
 package codingblackfemales.action;
 
 import codingblackfemales.sequencer.Sequencer;
+import codingblackfemales.sotw.ChildOrder;
 import messages.order.CreateOrderEncoder;
 import messages.order.MessageHeaderEncoder;
 import messages.order.Side;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 
-public class CreateChildOrder implements Action {
+public class CreateChildOrder extends ChildOrder implements Action {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateChildOrder.class);
     private final long quantity;

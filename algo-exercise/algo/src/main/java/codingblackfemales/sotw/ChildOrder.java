@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 public class ChildOrder {
     public static final int ACTIVE = 0;
-    public static final int CANCELED = 1;
+    public static final int FILLED = 1;
+    public static final int CANCELED = 2;  // Added constant for canceled state
+
     private Side side;
     private long orderId;
     private long quantity;
