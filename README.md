@@ -21,7 +21,7 @@ The objective of this challenge is to write a simple trading algorithm that crea
 
 ## The Stretch Objective
 
-The stretch objective of this challenge is to write a simple trading algorithm that creates and cancels child orders.
+The stretch objective of this challenge is to write an algo that can make money buy buying shares when the order book is cheaper, and selling them when the order book is more expensive.
 
 ## The UI Front End Objective
 
